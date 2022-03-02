@@ -1,0 +1,39 @@
+//to get the current date:
+machine:$ date
+Tue Mar  1 18:32:57 EST 2022
+
+//print out
+machine:$ echo hello
+hello
+
+//print all path in the machine
+machine:$ echo $PATH
+/usr/local/sbin:/usr/local/bin:
+/usr/sbin:/usr/bin:/sbin:/bin:/
+usr/games:/usr/local/games:/mnt/
+
+//which: search the path where the program is run
+machine:$ which echo
+/usr/bin/echo
+
+//Navigating the shell:
+//pwd(print working directory)
+machine:$ pwd
+Users/machine
+//cd(change directory)
+//cd .. to go one step back
+Users/machine:$ cd ..
+users:$ cd ./machine
+users/machine:$ pwd
+users/machine
+machine:$ ../../bin/echo hello
+hello
+//cd ~ takes you to your home directory and you can add more paths to it
+
+
+//ls(list directory)
+machine:$ ls
+file1
+file2
+
+//clear(clear shell)
