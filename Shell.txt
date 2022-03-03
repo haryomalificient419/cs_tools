@@ -29,6 +29,7 @@ users/machine
 machine:$ ../../bin/echo hello
 hello
 //cd ~ takes you to your home directory and you can add more paths to it
+//cd - takes you to the directory you are previously in
 
 
 //ls(list directory)
@@ -36,4 +37,73 @@ machine:$ ls
 file1
 file2
 
+//gives more insight and info of the files and directories
+machine:$ ls -l
+drwxrwxrwx 1 machine machine       512 Jan  4  2021 '3D Objects'
+//for example drwxr-xr-x (rwx: permission for owner of file)
+ (r-x: permission for group that owns this file) (r-x: permission for everyone else)
+ , d for directory
+ rwx means read, write and execute
+
+//move files
+mv file1 file2
+
+//copy files
+cp file1 ../file2
+
+//remove files
+rm ../file1
+
+//remove directory
+rmdir
+
+//make directory
+mkdir
+
+//manual page
+man
+
+//redirecting
+//take hello to hello.txt
+machine:$ echo hello > hello.txt
+
+machine:$ cat < hello.txt
+hello
+
+//alternate way to copy files
+machine:$ cat < hello.txt > hello2.txt
+
+//>> means append
+machine:$ cat < hello.txt >> hello2.txt
+machine:$ cat hello2.txt
+hello
+hello
+
+// | pipe, take the out put of the left side to the input of the right side
+machine:$ ls -l / | tail -n1 > ls.txt
+machine:$ cat ls.txt
+drwxrwxrwx 1 machine machine
+
+
+// sudo (do as su/ do as super user)
+machine:$ cd /sys
+machine:/sys$ ls
+block  bus  class  dev  devices  firmware  fs  kernel  module  power
+
+//this are programs/files that can control your system
+machine:/sys$ cd /class
+machine:/sys/class$ ls
+backlight  net  power_supply  switch  timed_output
+machine:/sys/class$ cd backlight
+machine:/sys/class/backlight$ ls
+intel_backlight
+machine:/sys/class/backlight/$cd intel_backlight
+machine:/sys/class/backlight/intel_backlight$
+machine:/sys/class/backlight/intel_backlight$ echo 500 > brightness
+bash: brightness: permission denied
+//use sudo su to activate super users
+machine:/sys/class/backlight/intel_backlight$ echo 1060 | sudo tee brightness 1060
+
 //clear(clear shell)
+
+//tail -n1 print last line
