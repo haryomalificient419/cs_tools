@@ -1,0 +1,55 @@
+//for variables
+machine:$ foo=bar
+machine:$ echo "$foo"
+bar
+machine:$ echo '$foo'
+$foo
+
+//example(bash supports control flow like most programming languages)
+mcd () {
+    mkdir -p "$1"
+    cd "$1"
+}
+//$1 is the first argument to the script/function.
+//$1 is a special variable in bash( list of special variables:
+ https://tldp.org/LDP/abs/html/special-chars.html)
+
+$0 - Name of the script
+$1 to $9 - Arguments to the script. $1 is the first argument and so on.
+$@ - All the arguments
+$# - Number of arguments
+$? - Return code of the previous command
+$$ - Process identification number (PID) for the current script
+!! - Entire last command, including arguments. A common pattern is to execute a\
+ command only for it to fail due to missing permissions; you can quickly
+  re-execute the command with sudo by doing sudo !!
+$_ - Last argument from the last command. If you are in an interactive shell,
+ you can also quickly get this value by typing Esc followed by . or Alt+.
+
+ machine:$ echo '$foo' $@
+ $foo
+ machine:$ echo 'foo' $1
+ $foo
+ machine:$  echo 'foo' $2
+ $foo
+ machine:$  !!
+ echo '$foo' $2
+ machine:$ $#
+ $foo 0
+ machine:$ echo '$foo' $$
+ $foo 8
+ //alt+. gets you the last command
+
+ //exit stattus 0 means everything is ok, anything else is an error.
+ //&&(and operator), ||(or operator)used to conditionally execute commands i.e
+ short circuiting operators
+ //commands can also be separated within the same line using a semi colon (;)
+ //true returns 0 and false returns 1.
+ //example
+ machine:$ false || echo "oops fail"
+ oops fail
+ machine:$ true || echo "will not be printed"
+ machine:$ true ; echo "this will always run"
+ this will always run
+ machine:$ false ; echo "this will always run"
+ this will always run
