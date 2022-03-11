@@ -52,4 +52,4 @@ $_ - Last argument from the last command. If you are in an interactive shell,
  machine:$ true ; echo "this will always run"
  this will always run
  machine:$ false ; echo "this will always run"
- this will always run
+ this will always run.
