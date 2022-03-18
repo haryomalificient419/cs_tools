@@ -40,7 +40,7 @@ $_ - Last argument from the last command. If you are in an interactive shell,
  $foo 8
  //alt+. gets you the last command
 
- //exit stattus 0 means everything is ok, anything else is an error.
+ //exit status 0 means everything is ok, anything else is an error.
  //&&(and operator), ||(or operator)used to conditionally execute commands i.e
  short circuiting operators
  //commands can also be separated within the same line using a semi colon (;)
@@ -53,3 +53,79 @@ $_ - Last argument from the last command. If you are in an interactive shell,
  this will always run
  machine:$ false ; echo "this will always run"
  this will always run
+
+ //subtitution
+ machine:$ echo "list of files $(ls -l | head -n 2)"
+ list of files total 1398926
+drwxrwxrwx 1 user user     512 Jan  4  2021 3D Objects
+//<(cmd) will execute cmd and place the output in a temporary file
+and substitute the <() with that file's name.
+diff <(ls foo) <(ls bar) will show differences between files in dirs foo and bar
+
+//rm foo* will remove every file with foo
+//{} when we have a common substring eg image.{png,jpg}
+//image.{png,jpg} will be image.png and  image.jpg
+machine:$ convert image.{png,jpg}
+machine:$ convert image.png image.jpg
+//^ the above commands are the same
+machine:$ mv *{.py, .sh} folder
+// ^ the above will move all *.py and *.sh files to folder
+// This creates files foo/a, foo/b, ... foo/h, bar/a, bar/b, ... bar/h
+touch {foo,bar}/{a..h}
+//touch foo/x bar/y x goes to foo dir and y goes to bar
+
+//you can use shellcheck to check errors in the shellcheck
+
+//SHELL TOOLS
+//find to recursively search for files matching some criteria.
+machine:$ find . -name src -type d
+//^find all directories named src
+
+machine:$ find . -path '*/test/*.py' -type f
+//^find all directories named src
+
+machine:$ find . -mtime -1
+//^Find all files modified in the last day
+
+machine:$ find . -size +500k -size -10M -name '*.tar.gz'
+//^Find all zip files with size in range 500k to 10M
+
+//use find to execute a command
+machine:$ find . -name '*.tmp' -exec rm {} \;
+//^ Delete all files with .tmp extension
+
+//find all png files and convert them to jpg
+machine:$ find . -name '*.png' -exec convert {} {}.jpg \;
+
+//using rg (ripgrep)
+//do:
+machine:$ sudo apt install ripgrep
+machine:$ sudo apt update
+
+//find all python files where the request library is used
+machine:$ rg -t py 'import requests'
+
+//Find all files (including hidden files) without a shebang line
+machine:$ rg -u --files-without-match "^#!"
+
+//find files with the shebang
+machine:$ rg -u "^#!"
+
+//Find all matches of foo and print the following 5 lines
+machine:$ rg foo -A 5
+
+//Print statistics of matches (# of matched lines and files )
+machine:$ rg --stats PATTERN
+
+//to get history of when we used the find command
+machine:$ history | grep find
+
+exercise:
+1. \\ Includes all files, including hidden files
+\\Sizes are listed in human readable format (e.g. 454M instead of 454279954)
+\\Files are ordered by recency
+\\Output is colorized
+solution:
+machine:$ ls -l -h --color --sort=time -a
+//OR
+machine:$  ls -l -h --color -t -a
